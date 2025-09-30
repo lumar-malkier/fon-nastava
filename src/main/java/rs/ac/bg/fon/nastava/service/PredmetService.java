@@ -1,5 +1,6 @@
 package rs.ac.bg.fon.nastava.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import rs.ac.bg.fon.nastava.model.entity.Predmet;
 import rs.ac.bg.fon.nastava.repo.PredmetRepo;
@@ -10,9 +11,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class PredmetService {
 
-    private PredmetRepo predmetRepo;
+    private final PredmetRepo predmetRepo;
 
     public List<Predmet> findAll() {
         return predmetRepo.findAll();

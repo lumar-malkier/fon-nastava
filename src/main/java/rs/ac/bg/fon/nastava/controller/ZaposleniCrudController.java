@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/zaposleni")
+@RequestMapping("/api/employees")
 class ZaposleniCrudController {
 
     private final ZaposleniService zaposleniService;

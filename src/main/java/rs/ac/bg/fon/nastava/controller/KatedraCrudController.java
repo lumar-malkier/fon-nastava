@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/katedra")
+@RequestMapping("/api/departments")
 class KatedraCrudController {
 
     private final KatedraService katedraService;

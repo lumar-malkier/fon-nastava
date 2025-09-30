@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/predmet")
+@RequestMapping("/api/subjects")
 class PredmetCrudController {
 
     private final PredmetService predmetService;

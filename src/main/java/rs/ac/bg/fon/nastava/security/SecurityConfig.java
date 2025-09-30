@@ -28,11 +28,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder,
-                                                 @Value("${ADMIN_PASS}") String adminPassword) {
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails admin = User.builder()
                 .username("admin")
-                .password(passwordEncoder.encode(adminPassword))
+                .password(passwordEncoder.encode("password123"))
                 .roles("ADMIN")
                 .build();
 
@@ -55,6 +54,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated()
                 )

@@ -1,5 +1,6 @@
 package rs.ac.bg.fon.nastava.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.bg.fon.nastava.model.entity.Zaposleni;
@@ -13,10 +14,10 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
+@RequiredArgsConstructor
 public class ZaposleniService {
 
-    @Autowired
-    private ZaposleniRepo zaposleniRepo;
+    private final ZaposleniRepo zaposleniRepo;
 
     private static final Pattern EMAIL_PATTERN =
         Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
