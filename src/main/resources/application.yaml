@@ -4,9 +4,9 @@ spring:
 
   # podesavanja baze
   datasource:
-    url: jdbc:postgresql://localhost:5432/fon_nastava
+    url: jdbc:postgresql://localhost:5434/fon_nastava
     username: admin
-    password: admin
+    password: password123
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

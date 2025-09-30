@@ -9,7 +9,7 @@ docker run --name postgres-db \
   -e POSTGRES_DB=fon_nastava \
   -e POSTGRES_USER=admin \
   -e POSTGRES_PASSWORD=password123 \
-  -p 5432:5432 \
+  -p 5434:5432 \
   -d postgres:16.10
 ```
 
@@ -32,7 +32,7 @@ mvn spring-boot:run
 ## Detalji konekcije na bazu podataka
 
 - **Host:** localhost
-- **Port:** 5432
+- **Port:** 5434
 - **Baza podataka:** fon_nastava
 - **Korisničko ime:** admin
 - **Lozinka:** password123 (postavlja se preko DB_PASSWORD environment promenljive)
