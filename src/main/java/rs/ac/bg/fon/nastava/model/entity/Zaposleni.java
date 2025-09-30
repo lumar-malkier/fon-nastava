@@ -25,6 +25,7 @@ public class Zaposleni {
     private String prezime;
     private String jmbg;
     private String email;
+    private Zvanje zvanje;
 
     private LocalDateTime datumZaposlenja;
 

@@ -29,6 +29,10 @@ public class Predmet {
 
     private OffsetDateTime deletedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "katedra_id")
+    private Katedra katedra;
+
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "predmet")
     private Set<Angazovanje> angazovanja;
 

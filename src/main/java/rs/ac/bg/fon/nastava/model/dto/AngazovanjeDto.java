@@ -2,6 +2,8 @@ package rs.ac.bg.fon.nastava.model.dto;
 
 import rs.ac.bg.fon.nastava.model.entity.Angazovanje;
 import rs.ac.bg.fon.nastava.model.entity.OblikNastave;
+import rs.ac.bg.fon.nastava.model.entity.Predmet;
+import rs.ac.bg.fon.nastava.model.entity.Zaposleni;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,8 +14,10 @@ public record AngazovanjeDto(
         OblikNastave uloga,
         LocalDateTime datumPocetka,
         LocalDateTime datumZavrsetka,
-        PredmetDto predmet,
-        ZaposleniDto zaposleni
+        UUID predmetId,
+        String predmetNaziv,
+        UUID zaposleniId,
+        String zaposleniIme
 ) {
 
     public static AngazovanjeDto from(Angazovanje angazovanje) {
@@ -23,8 +27,12 @@ public record AngazovanjeDto(
                 angazovanje.getUloga(),
                 angazovanje.getDatumPocetka(),
                 angazovanje.getDatumZavrsetka(),
-                angazovanje.getPredmet() != null ? PredmetDto.from(angazovanje.getPredmet()) : null,
-                angazovanje.getZaposleni() != null ? ZaposleniDto.from(angazovanje.getZaposleni()) : null
+                angazovanje.getPredmet() != null ? angazovanje.getPredmet().getId() : null,
+                angazovanje.getPredmet() != null ? angazovanje.getPredmet().getNaziv() : null,
+                angazovanje.getZaposleni() != null ? angazovanje.getZaposleni().getId() : null,
+                angazovanje.getZaposleni() != null
+                        ? angazovanje.getZaposleni().getIme() + " " + angazovanje.getZaposleni().getPrezime()
+                        : null
         );
     }
 
@@ -35,8 +43,19 @@ public record AngazovanjeDto(
         angazovanje.setUloga(uloga);
         angazovanje.setDatumPocetka(datumPocetka);
         angazovanje.setDatumZavrsetka(datumZavrsetka);
-        angazovanje.setPredmet(predmet != null ? predmet.toEntity() : null);
-        angazovanje.setZaposleni(zaposleni != null ? zaposleni.toEntity() : null);
+
+        if (predmetId != null) {
+            Predmet p = new Predmet();
+            p.setId(predmetId);
+            angazovanje.setPredmet(p);
+        }
+
+        if (zaposleniId != null) {
+            Zaposleni z = new Zaposleni();
+            z.setId(zaposleniId);
+            angazovanje.setZaposleni(z);
+        }
+
         return angazovanje;
     }
 }

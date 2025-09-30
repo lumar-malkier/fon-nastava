@@ -1,5 +1,6 @@
 package rs.ac.bg.fon.nastava.model.dto;
 
+import rs.ac.bg.fon.nastava.model.entity.Katedra;
 import rs.ac.bg.fon.nastava.model.entity.Predmet;
 
 import java.util.UUID;
@@ -8,7 +9,8 @@ public record PredmetDto(
         UUID id,
         String naziv,
         Integer espb,
-        String sifra
+        String sifra,
+        UUID katedraId
 ) {
 
     public static PredmetDto from(Predmet predmet) {
@@ -16,7 +18,8 @@ public record PredmetDto(
                 predmet.getId(),
                 predmet.getNaziv(),
                 predmet.getEspb(),
-                predmet.getSifra()
+                predmet.getSifra(),
+                predmet.getKatedra() != null ? predmet.getKatedra().getId() : null
         );
     }
 
@@ -26,6 +29,13 @@ public record PredmetDto(
         predmet.setNaziv(naziv);
         predmet.setEspb(espb);
         predmet.setSifra(sifra);
+
+        if (katedraId != null) {
+            Katedra k = new Katedra();
+            k.setId(katedraId);
+            predmet.setKatedra(k);
+        }
+
         return predmet;
     }
 }
