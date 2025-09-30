@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "predmet")
+@Table(name = "katedra")
 public class Katedra {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

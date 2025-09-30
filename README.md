@@ -18,14 +18,14 @@ docker run --name postgres-db \
 ### Korišćenje JAR fajla
 
 ```bash
-export DB_PASSWORD=password123
+export SPRING_DATASOURCE_PASSWORD=password123
 java -jar target/your-app-name.jar
 ```
 
 ### Korišćenje Maven Spring Boot
 
 ```bash
-export DB_PASSWORD=password123
+export SPRING_DATASOURCE_PASSWORD=password123
 mvn spring-boot:run
 ```
 

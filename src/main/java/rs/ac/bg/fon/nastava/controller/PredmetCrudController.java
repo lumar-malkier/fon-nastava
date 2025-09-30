@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.bg.fon.nastava.model.dto.PredmetDto;
 import rs.ac.bg.fon.nastava.model.entity.Predmet;
@@ -21,6 +22,7 @@ class PredmetCrudController {
     private final PredmetService predmetService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     public ResponseEntity<List<PredmetDto>> getAll() {
         List<Predmet> predmeti = predmetService.findAllActive();
         List<PredmetDto> predmetiDtos = predmeti.stream()
@@ -30,6 +32,7 @@ class PredmetCrudController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     public ResponseEntity<PredmetDto> getById(@PathVariable UUID id) {
         Optional<Predmet> optionalPredmet = predmetService.findActiveById(id);
         return optionalPredmet.map(p -> ResponseEntity.ok(PredmetDto.from(p)))
@@ -37,6 +40,7 @@ class PredmetCrudController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PredmetDto> create(@RequestBody PredmetDto predmetDto) {
         Predmet predmet = predmetDto.toEntity();
         predmet.setId(null);
@@ -46,6 +50,7 @@ class PredmetCrudController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PredmetDto> update(@PathVariable UUID id, @RequestBody PredmetDto predmetDto) {
         Predmet predmet = predmetDto.toEntity();
         Predmet updatedPredmet = predmetService.update(id, predmet);
@@ -54,6 +59,7 @@ class PredmetCrudController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         predmetService.deleteById(id);
         return ResponseEntity.noContent().build();

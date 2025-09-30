@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.bg.fon.nastava.model.dto.ZaposleniDto;
 import rs.ac.bg.fon.nastava.model.entity.Zaposleni;
@@ -21,6 +22,7 @@ class ZaposleniCrudController {
     private final ZaposleniService zaposleniService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     public ResponseEntity<List<ZaposleniDto>> getAll() {
         List<Zaposleni> zaposleni = zaposleniService.findAllActive();
         List<ZaposleniDto> zaposleniDtos = zaposleni.stream()
@@ -30,6 +32,7 @@ class ZaposleniCrudController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     public ResponseEntity<ZaposleniDto> getById(@PathVariable UUID id) {
         Optional<Zaposleni> optionalZaposleni = zaposleniService.findActiveById(id);
         return optionalZaposleni.map(z -> ResponseEntity.ok(ZaposleniDto.from(z)))
@@ -37,6 +40,7 @@ class ZaposleniCrudController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ZaposleniDto> create(@RequestBody ZaposleniDto zaposleniDto) {
         Zaposleni zaposleni = zaposleniDto.toEntity();
         zaposleni.setId(null);
@@ -46,6 +50,7 @@ class ZaposleniCrudController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ZaposleniDto> update(@PathVariable UUID id, @RequestBody ZaposleniDto zaposleniDto) {
         Zaposleni zaposleni = zaposleniDto.toEntity();
         Zaposleni updatedZaposleni = zaposleniService.update(id, zaposleni);
@@ -54,6 +59,7 @@ class ZaposleniCrudController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         zaposleniService.deleteById(id);
         return ResponseEntity.noContent().build();

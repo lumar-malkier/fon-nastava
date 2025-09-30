@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.bg.fon.nastava.model.dto.KatedraDto;
 import rs.ac.bg.fon.nastava.model.entity.Katedra;
@@ -21,6 +22,7 @@ class KatedraCrudController {
     private final KatedraService katedraService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     public ResponseEntity<List<KatedraDto>> getAll() {
         List<Katedra> katedre = katedraService.findAll();
         List<KatedraDto> katedreDtos = katedre.stream()
@@ -30,6 +32,7 @@ class KatedraCrudController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     public ResponseEntity<KatedraDto> getById(@PathVariable UUID id) {
         Optional<Katedra> optionalKatedra = katedraService.findById(id);
         return optionalKatedra.map(k -> ResponseEntity.ok(KatedraDto.from(k)))
@@ -37,6 +40,7 @@ class KatedraCrudController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<KatedraDto> create(@RequestBody KatedraDto katedraDto) {
         Katedra katedra = katedraDto.toEntity();
         katedra.setId(null); // Ensure new entity creation
@@ -46,6 +50,7 @@ class KatedraCrudController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<KatedraDto> update(@PathVariable UUID id, @RequestBody KatedraDto katedraDto) {
         Katedra katedra = katedraDto.toEntity();
         Katedra updatedKatedra = katedraService.update(id, katedra);
@@ -54,6 +59,7 @@ class KatedraCrudController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         katedraService.deleteById(id);
         return ResponseEntity.noContent().build();

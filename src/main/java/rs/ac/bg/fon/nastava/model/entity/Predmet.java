@@ -29,7 +29,7 @@ public class Predmet {
 
     private OffsetDateTime deletedAt;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "predmet")
     private Set<Angazovanje> angazovanja;
 
 }

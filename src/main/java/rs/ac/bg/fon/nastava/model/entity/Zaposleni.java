@@ -30,7 +30,11 @@ public class Zaposleni {
 
     private OffsetDateTime deletedAt;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "katedra_id")
+    private Katedra katedra;
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "zaposleni")
     private Set<Angazovanje> angazovanja;
 
 }
