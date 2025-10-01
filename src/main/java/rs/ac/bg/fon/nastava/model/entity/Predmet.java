@@ -33,7 +33,9 @@ public class Predmet {
     @JoinColumn(name = "katedra_id")
     private Katedra katedra;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "predmet")
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "predmet")
     private Set<Angazovanje> angazovanja;
 
 }

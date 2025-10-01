@@ -1,7 +1,6 @@
 package rs.ac.bg.fon.nastava.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.bg.fon.nastava.model.entity.Zaposleni;
 import rs.ac.bg.fon.nastava.repo.ZaposleniRepo;
